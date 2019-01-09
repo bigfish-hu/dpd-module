@@ -1,20 +1,11 @@
 {
     "name": "bigfish/dpd-module",
     "description": "BIG FISH - Magento 2 dpd shipping method",
-    "support": {
-      "email": "dev@bigfish.hu",
-      "source": "https://gitlab.big.hu/eurofamily/dpd-module.git"
-    },
-    "repositories": [
-      {
-        "type": "composer",
-        "url": "https://packagist.big.hu/"
-      }
-    ],
     "require": {
       "php": ">=5.6.5"
     },
     "type": "magento2-module",
+    "version": "1.0.1",
     "autoload": {
       "files": [
         "registration.php"

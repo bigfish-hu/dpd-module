@@ -43,7 +43,11 @@ class Index extends \Magento\Framework\App\Action\Action
             $apiKey = $this->data->getGoogleMapsApiKey();
 
             $addressToInsert = 'country:' . $countryId . '|postal_code:' . $postcode;
-            $url = 'https://maps.google.com/maps/api/geocode/json?key=' . $apiKey . '&components=' . urlencode($addressToInsert) . '&sensor=false';
+            $url = sprintf(
+                'https://maps.google.com/maps/api/geocode/json?components=%s&sensor=false&key=%s',
+                $addressToInsert,
+                $apiKey
+            );
             $source = file_get_contents($url);
             $obj = json_decode($source);
 

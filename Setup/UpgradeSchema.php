@@ -19,6 +19,7 @@
  */
 namespace BigFish\Shipping\Setup;
 
+use Magento\Framework\DB\Ddl\Table;
 use Magento\Framework\Setup\UpgradeSchemaInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
@@ -83,7 +84,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     $setup->getTable('quote'),
                     'dpd_parcelshop_id',
                     [
-                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        'type' => Table::TYPE_TEXT,
                         'nullable' => true,
                         'comment' => 'Parcelshop ID',
                     ]
@@ -95,7 +96,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     $setup->getTable('quote'),
                     'dpd_company',
                     [
-                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        'type' => Table::TYPE_TEXT,
                         'nullable' => true,
                         'comment' => 'Parcelshop company',
                     ]
@@ -107,7 +108,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     $setup->getTable('quote'),
                     'dpd_street',
                     [
-                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        'type' => Table::TYPE_TEXT,
                         'nullable' => true,
                         'comment' => 'Parcelshop street',
                     ]
@@ -119,7 +120,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     $setup->getTable('quote'),
                     'dpd_zipcode',
                     [
-                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        'type' => Table::TYPE_TEXT,
                         'nullable' => true,
                         'comment' => 'Parcelshop zipcode',
                     ]
@@ -131,7 +132,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     $setup->getTable('quote'),
                     'dpd_city',
                     [
-                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        'type' => Table::TYPE_TEXT,
                         'nullable' => true,
                         'comment' => 'Parcelshop city',
                     ]
@@ -143,7 +144,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     $setup->getTable('quote'),
                     'dpd_country',
                     [
-                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        'type' => Table::TYPE_TEXT,
                         'nullable' => true,
                         'comment' => 'Parcelshop country',
                     ]
@@ -155,7 +156,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     $setup->getTable('quote'),
                     'dpd_extra_info',
                     [
-                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        'type' => Table::TYPE_TEXT,
                         'nullable' => true,
                         'comment' => 'Parcelshop extra info',
                     ]
@@ -170,7 +171,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     $setup->getTable('sales_order'),
                     'dpd_shop_id',
                     [
-                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        'type' => Table::TYPE_TEXT,
                         'nullable' => true,
                         'comment' => 'Parcelshop ID',
                     ]
@@ -189,55 +190,55 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     $setup->getTable('dpd_shipping_tablerate')
                 )->addColumn(
                     'pk',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    Table::TYPE_INTEGER,
                     null,
                     ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
                     'Primary key'
                 )->addColumn(
                     'website_id',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    Table::TYPE_INTEGER,
                     null,
                     ['nullable' => false, 'default' => '0'],
                     'Website Id'
                 )->addColumn(
                     'dest_country_id',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    Table::TYPE_TEXT,
                     4,
                     ['nullable' => false, 'default' => '0'],
                     'Destination coutry ISO/2 or ISO/3 code'
                 )->addColumn(
                     'dest_region_id',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    Table::TYPE_INTEGER,
                     null,
                     ['nullable' => false, 'default' => '0'],
                     'Destination Region Id'
                 )->addColumn(
                     'dest_zip',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    Table::TYPE_TEXT,
                     10,
                     ['nullable' => false, 'default' => '*'],
                     'Destination Post Code (Zip)'
                 )->addColumn(
                     'condition_name',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    Table::TYPE_TEXT,
                     20,
                     ['nullable' => false],
                     'Rate Condition name'
                 )->addColumn(
                     'condition_value',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL,
+                    Table::TYPE_DECIMAL,
                     '12,4',
                     ['nullable' => false, 'default' => '0.0000'],
                     'Rate condition value'
                 )->addColumn(
                     'price',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL,
+                    Table::TYPE_DECIMAL,
                     '12,4',
                     ['nullable' => false, 'default' => '0.0000'],
                     'Price'
                 )->addColumn(
                     'cost',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL,
+                    Table::TYPE_DECIMAL,
                     '12,4',
                     ['nullable' => false, 'default' => '0.0000'],
                     'Cost'
@@ -265,7 +266,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     $setup->getTable('dpd_shipping_tablerate'),
                     'shipping_method',
                     [
-                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                        'type' => Table::TYPE_TEXT,
                         'length' => 150,
                         'nullable' => false,
                         'default' => 'dpdpredict',
@@ -309,47 +310,47 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     $setup->getTable('dpd_shipment_label')
                 )->addColumn(
                     'id_dpdcarrier_label',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    Table::TYPE_INTEGER,
                     null,
                     ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true]
                 )->addColumn(
                     'mps_id',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    Table::TYPE_TEXT,
                     255,
                     ['nullable' => false]
                 )->addColumn(
                     'label_numbers',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    Table::TYPE_TEXT,
                     null,
                     ['nullable' => false]
                 )->addColumn(
                     'order_id',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    Table::TYPE_INTEGER,
                     10,
                     ['nullable' => false]
                 )->addColumn(
                     'shipment_id',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    Table::TYPE_INTEGER,
                     10,
                     ['nullable' => false]
                 )->addColumn(
                     'shipment_increment_id',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    Table::TYPE_TEXT,
                     10,
                     ['nullable' => false]
                 )->addColumn(
                     'created_at',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
+                    Table::TYPE_TIMESTAMP,
                     '',
-                    ['nullable' => false, 'default' =>  \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT]
+                    ['nullable' => false, 'default' =>  Table::TIMESTAMP_INIT]
                 )->addColumn(
                     'label',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_BLOB,
+                    Table::TYPE_BLOB,
                     "16M",
                     ['nullable' => false]
                 )->addColumn(
                     'is_return',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    Table::TYPE_INTEGER,
                     1,
                     ['nullable' => false]
                 )->addIndex(

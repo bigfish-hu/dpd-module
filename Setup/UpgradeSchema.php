@@ -500,6 +500,21 @@ class UpgradeSchema implements UpgradeSchemaInterface
             }
         }
 
+        if (version_compare($context->getVersion(), '1.2.0') < 0) {
+            if ($connection->tableColumnExists($setup->getTable('sales_order'), 'dpd_parcel_number') === false) {
+                $setup->getConnection()->addColumn(
+                    $setup->getTable('sales_order'),
+                    'dpd_parcel_number',
+                    [
+                        'type' => Table::TYPE_TEXT,
+                        'default' => NULL,
+                        'size' => 200,
+                        'comment' => 'DPD parcel number',
+                    ]
+                );
+            }
+        }
+
         $setup->endSetup();
     }
 }

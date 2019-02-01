@@ -154,9 +154,9 @@ class DpdClassic extends \Magento\Shipping\Model\Carrier\AbstractCarrier impleme
      */
     public function collectRates(RateRequest $request)
     {
-        if ($this->_scopeConfig->getValue("dpdshipping/account_settings/account_type") !== "B2B") {
-            return false;
-        }
+//        if ($this->_scopeConfig->getValue("dpdshipping/account_settings/account_type") !== "B2B") {
+//            return false;
+//        }
 
         if (!$this->getConfigFlag('active')) {
             return false;

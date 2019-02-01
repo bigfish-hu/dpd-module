@@ -20,6 +20,7 @@
 namespace BigFish\Shipping\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
+use GuzzleHttp;
 
 class DPDClient extends AbstractHelper
 {
@@ -28,9 +29,12 @@ class DPDClient extends AbstractHelper
     const DPD_LOGIN_SERVICE_URL = 'LoginService.svc?singleWsdl';
     const DPD_SHIPMENT_SERVICE_URL = 'ShipmentService.svc?singleWsdl';
     const DPD_PARCELSHOP_URL = 'ParcelShopFinderService.svc?singleWsdl';
+    const DPD_PARCEL_STATUS_URL = 'parcel_status.php?';
+    const DPD_PARCEL_IMPORT_URL = 'parcel_import.php?';
 
     const DPD_STAGING_SERVICE_URL = 'https://public-dis-stage.dpd.nl/Services/';
     const DPD_LIVE_SERVICE_URL = 'https://public-dis.dpd.nl/Services/';
+    const DPD_WEBLABEL = 'https://weblabel.dpd.hu/dpd_wow/';
 
     /**
      * Used to get the Temp directory of Magento
@@ -38,12 +42,25 @@ class DPDClient extends AbstractHelper
      */
     private $directoryList;
 
+    /**
+     * @var GuzzleHttp\Client
+     */
+    private $client;
+
+    /**
+     * DPDClient constructor.
+     * @param \Magento\Framework\App\Helper\Context $context
+     * @param \Magento\Framework\App\Filesystem\DirectoryList $directoryList
+     * @param GuzzleHttp\Client $client
+     */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
-        \Magento\Framework\App\Filesystem\DirectoryList $directoryList
+        \Magento\Framework\App\Filesystem\DirectoryList $directoryList,
+        GuzzleHttp\Client $client
     ) {
         $this->directoryList = $directoryList;
         $this->checkIfExtensionIsLoaded('soap');
+        $this->client = $client;
         parent::__construct($context);
     }
 
@@ -202,5 +219,45 @@ class DPDClient extends AbstractHelper
         if (!extension_loaded($extension)) {
             throw new \Exception(__('SOAP extension is not loaded.'), 0);
         }
+    }
+
+    public function getWebLabelParcelNumber($shipmentData, $apiUser, $apiPassword)
+    {
+        $responseObject = $this->sendDataToWebLabel($shipmentData, $apiUser, $apiPassword);
+
+        if ($responseObject->status == 'err') {
+            $this->_logger->error($responseObject->errlog);
+            throw new \Exception('Faild get parcel number from DPD Weblabel');
+        }
+
+        return $responseObject->pl_number[0];
+    }
+
+    protected function sendDataToWebLabel($shipmentData, $apiUser, $apiPassword)
+    {
+        $url = self::DPD_WEBLABEL . self::DPD_PARCEL_IMPORT_URL;
+
+        try {
+            $post = $this->getRequestOptions();
+            $post['form_params'] = $shipmentData;
+            $post['form_params']['username'] = $apiUser;
+            $post['form_params']['password'] = $apiPassword;
+            $request = $this->client->post($url, $post);
+
+            return json_decode($request->getBody());
+        } catch (GuzzleHttp\Exception\ServerException $exception) {
+            $this->_logger->error(print_r($post, true));
+            throw new \Exception($exception->getMessage());
+        }
+    }
+
+    protected function getRequestOptions()
+    {
+        return [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Accept' => 'application/json'
+            ],
+        ];
     }
 }

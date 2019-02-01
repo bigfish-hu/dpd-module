@@ -195,7 +195,7 @@ class DPDPredictService extends AbstractHelper
     public function generateLabel(Order $order, $isReturn = false, Order\Shipment $shipment = null, $parcels = 1)
     {
         $accessToken = $this->authenticationService->getAccessToken();
-        $delisId = $this->authenticationService->getDelisId();
+        $apiUserName = $this->authenticationService->getApiUserName();
         $depot = $this->authenticationService->getDepot();
 
         $senderData = $this->getSenderData();
@@ -277,7 +277,7 @@ class DPDPredictService extends AbstractHelper
             $shipmentData['order']['productAndServiceData']['saturdayDelivery'] = true;
         }
 
-        $result = $this->dpdClient->storeOrders($shipmentData, $delisId, $accessToken);
+        $result = $this->dpdClient->storeOrders($shipmentData, $apiUserName, $accessToken);
         $parcelInformation = $result->orderResult->shipmentResponses->parcelInformation;
         if (is_object($parcelInformation)) {
             $parcelInformation = [$parcelInformation];

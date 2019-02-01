@@ -55,9 +55,14 @@ class AuthenticationService extends AbstractHelper
         parent::__construct($context);
     }
 
-    public function getDelisId()
+    public function getApiUserName()
     {
         return $this->scopeConfig->getValue(self::DPD_USERNAME);
+    }
+
+    public function getApiPassword()
+    {
+        return $password = $this->scopeConfig->getValue(self::DPD_PASSWORD);
     }
 
     public function getDepot()

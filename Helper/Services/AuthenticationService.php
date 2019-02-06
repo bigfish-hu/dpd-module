@@ -62,7 +62,9 @@ class AuthenticationService extends AbstractHelper
 
     public function getApiPassword()
     {
-        return $password = $this->scopeConfig->getValue(self::DPD_PASSWORD);
+        $password = $this->scopeConfig->getValue(self::DPD_PASSWORD);
+
+        return $this->crypt->decrypt($password);
     }
 
     public function getDepot()

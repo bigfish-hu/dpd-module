@@ -84,10 +84,9 @@ class Index extends \Magento\Framework\App\Action\Action
         }
 
         $coordinates = $this->getGoogleMapsCenter($post['postcode'], $post['countryId']);
-        if ($coordinates == null) {
-            $resultData['success'] = false;
-            $resultData['error_message'] = __('No address found');
-            return $result->setData($resultData);
+        if ($coordinates != null) {
+            $resultData['center_lat'] = $coordinates[0];
+            $resultData['center_long'] = $coordinates[1];
         }
 
         $parcelShops = $this->DPDPickupService->getParcelShops();
@@ -95,8 +94,6 @@ class Index extends \Magento\Framework\App\Action\Action
         $params = array('_secure' => $this->getRequest()->isSecure());
 
         $resultData['success'] = true;
-        $resultData['center_lat'] = $coordinates[0];
-        $resultData['center_long'] = $coordinates[1];
 
         $resultData["gmapsIcon"] = $this->assetRepo->getUrlWithParams('BigFish_Shipping::images/icon_parcelshop.png', $params);
         $resultData["gmapsIconShadow"] = $this->assetRepo->getUrlWithParams('BigFish_Shipping::images/icon_parcelshop_shadow.png', $params);

@@ -6,7 +6,7 @@
       "guzzlehttp/guzzle": "~6.0"
     },
     "type": "magento2-module",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "autoload": {
       "files": [
         "registration.php"
